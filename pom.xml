@@ -10,8 +10,9 @@
     <version>${version}</version>
     <modules>
         <module>server</module>
-        <module>core</module>
         <module>hell</module>
+        <module>server.core</module>
+        <module>hell.impl</module>
     </modules>
 
 

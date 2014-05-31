@@ -1,6 +1,6 @@
 package com.mkr.hellgame.server;
 
-import com.mkr.hellgame.core.Job;
+import com.mkr.hellgame.server.core.Job;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

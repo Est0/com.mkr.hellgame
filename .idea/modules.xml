@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/com.mkr.hellgame.iml" filepath="$PROJECT_DIR$/com.mkr.hellgame.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/hell/hell.iml" filepath="$PROJECT_DIR$/hell/hell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hell.impl/hell.impl.iml" filepath="$PROJECT_DIR$/hell.impl/hell.impl.iml" />
       <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server.core/server.core.iml" filepath="$PROJECT_DIR$/server.core/server.core.iml" />
     </modules>
   </component>
 </project>

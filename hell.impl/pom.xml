@@ -9,7 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>core</artifactId>
+    <artifactId>hell.impl</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.mkr.hellgame</groupId>
+            <artifactId>hell</artifactId>
+            <version>${version}</version>
+        </dependency>
+    </dependencies>
 </project>

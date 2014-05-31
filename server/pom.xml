@@ -14,13 +14,19 @@
     <dependencies>
         <dependency>
             <groupId>com.mkr.hellgame</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>server.core</artifactId>
             <version>${version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.mkr.hellgame</groupId>
             <artifactId>hell</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mkr.hellgame</groupId>
+            <artifactId>hell.impl</artifactId>
             <version>${version}</version>
         </dependency>
 
