@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>${version}</version>
     <modules>
-        <module>server</module>
+        <module>host</module>
         <module>hell</module>
         <module>server.core</module>
         <module>hell.impl</module>

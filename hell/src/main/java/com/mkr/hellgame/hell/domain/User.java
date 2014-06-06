@@ -1,6 +1,6 @@
-package com.mkr.hellgame.hell.entities;
+package com.mkr.hellgame.hell.domain;
 
-public class InGameUser {
+public class User {
     private int id;
 
     public int getId() {

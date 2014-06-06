@@ -1,7 +1,7 @@
 package com.mkr.hellgame.hell.impl.dao;
 
 import com.mkr.hellgame.hell.dao.OrderDao;
-import com.mkr.hellgame.hell.entities.Order;
+import com.mkr.hellgame.hell.domain.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

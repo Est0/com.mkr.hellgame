@@ -1,6 +1,6 @@
 package com.mkr.hellgame.hell.dao;
 
-import com.mkr.hellgame.hell.entities.Order;
+import com.mkr.hellgame.hell.domain.Order;
 
 public interface HellApiDao {
     void SendRequest(Order order);

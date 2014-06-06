@@ -1,7 +1,7 @@
 package com.mkr.hellgame.hell.impl.dao;
 
 import com.mkr.hellgame.hell.dao.HellApiDao;
-import com.mkr.hellgame.hell.entities.Order;
+import com.mkr.hellgame.hell.domain.Order;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

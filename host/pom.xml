@@ -9,12 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>server</artifactId>
+    <artifactId>host</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.mkr.hellgame</groupId>
-            <artifactId>server.core</artifactId>
+            <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
 

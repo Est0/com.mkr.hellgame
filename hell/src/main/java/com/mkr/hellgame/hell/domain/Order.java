@@ -1,4 +1,4 @@
-package com.mkr.hellgame.hell.entities;
+package com.mkr.hellgame.hell.domain;
 
 import java.util.Date;
 
