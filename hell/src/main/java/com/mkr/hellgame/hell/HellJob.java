@@ -21,45 +21,38 @@ public class HellJob implements Job {
 
     @Override
     public void run() {
-        while (true) {
-            List<Order> newOrders = orderDao.getNewOrders();
-            List<Order> finishedOrders = orderDao.getFinishedOrders();
+        System.out.println("Hell yea!");
+        List<Order> newOrders = orderDao.getNewOrders();
+        List<Order> finishedOrders = orderDao.getFinishedOrders();
 
-            Date now = new Date();
-            for (Order finishedOrder : finishedOrders) {
-                finishedOrder.setEndDate(now);
-                boolean newOrderExists = false;
-                for (Order newOrder: newOrders) {
-                    if (newOrder.getInGameUserId() == finishedOrder.getInGameUserId()) {
-                        newOrderExists = true;
-                        break;
-                    }
-                }
-                if (!newOrderExists) {
-                    newOrders.add(new Order()
-                    {{
-                            setId(3);
-                            setInGameUserId(2);
-                            setDurationMilliSeconds(1000);
-                        }});
+        Date now = new Date();
+        for (Order finishedOrder : finishedOrders) {
+            finishedOrder.setEndDate(now);
+            boolean newOrderExists = false;
+            for (Order newOrder: newOrders) {
+                if (newOrder.getInGameUserId() == finishedOrder.getInGameUserId()) {
+                    newOrderExists = true;
+                    break;
                 }
             }
+            if (!newOrderExists) {
+                newOrders.add(new Order()
+                {{
+                        setId(3);
+                        setInGameUserId(2);
+                        setDurationMilliSeconds(1000);
+                    }});
+            }
+        }
 
-            for (Order order: newOrders) {
-                order.setStartDate(now);
-                HellApiDao hellApiDao = null;
-                for (HellApiDao hellApiDao: hellApiDaos) {
-                    Qualifier qualifier = hellApiDao.getClass().getAnnotation(Qualifier.class);
-                    if (qualifier != null && qualifier.value() == order.get)
+        for (Order order: newOrders) {
+            order.setStartDate(now);
+            for (HellApiDao hellApiDao: hellApiDaos) {
+                Qualifier qualifier = hellApiDao.getClass().getAnnotation(Qualifier.class);
+                if (qualifier != null && qualifier.value() == "VK") {
+                    hellApiDao.SendRequest(order);
+                    break;
                 }
-                hellApiDaos.get(0).SendRequest(order);
-            }
-
-            try {
-                Thread.sleep(10000);
-            }
-            catch (InterruptedException e) {
-                return;
             }
         }
     }

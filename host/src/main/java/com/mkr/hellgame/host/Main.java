@@ -1,45 +1,31 @@
 package com.mkr.hellgame.host;
 
-import com.mkr.hellgame.hell.HellJob;
 import com.mkr.hellgame.infrastructure.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Host started");
 
-        final ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        context.getAutowireCapableBeanFactory().initializeBean(new Configuration() {
-            @Override
-            public long getExecutorGranularity() {
-                return 1000;
-            }
-
-            @Override
-            public List<Trigger> getTriggers() {
-                return new ArrayList<Trigger>() {{
-                    add(new IntervalTrigger(5000) {{
-                        setJob(new HellJob());
-                    }});
-                }};
-            }
-        }, "Configuration");
-
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         try
         {
             Executor executor = context.getBean(Executor.class);
             executor.start();
             System.in.read();
-            executor.stop(1, TimeUnit.SECONDS);
+            System.out.println("Stopping executor");
+            boolean success = executor.stop(2, TimeUnit.SECONDS);
+            if (success) {
+                System.out.println("Executor stopped successfully");
+            }
+            else {
+                System.out.println("Executor was not stopped in time");
+            }
         }
-        catch (Exception e)
-        {
-            // Do nothing.
+        catch (Exception e) {
         }
 
         System.out.println("Host stopped");

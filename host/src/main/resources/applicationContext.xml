@@ -6,6 +6,15 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="com.mkr.hellgame.infrastructure"/>
     <context:component-scan base-package="com.mkr.hellgame.hell"/>
+
+    <bean class="com.mkr.hellgame.infrastructure.SpringExecutorConfigurationFactory" autowire="byType">
+        <property name="executorGranularity" value="1000" />
+    </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.IntervalTrigger" autowire="byType">
+        <property name="interval" value="5000" />
+    </bean>
 
 </beans>

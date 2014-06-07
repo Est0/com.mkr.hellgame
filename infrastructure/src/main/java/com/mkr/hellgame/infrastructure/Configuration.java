@@ -1,9 +1,24 @@
 package com.mkr.hellgame.infrastructure;
 
-import java.util.List;
+import java.util.Collection;
 
-public interface Configuration {
-    long getExecutorGranularity();
+public class Configuration {
+    private long executorGranularity;
+    private Collection<Trigger> triggers;
 
-    List<Trigger> getTriggers();
+    public long getExecutorGranularity() {
+        return executorGranularity;
+    }
+
+    public void setExecutorGranularity(long executorGranularity) {
+        this.executorGranularity = executorGranularity;
+    }
+
+    public Collection<Trigger> getTriggers() {
+        return triggers;
+    }
+
+    public void setTriggers(Collection<Trigger> triggers) {
+        this.triggers = triggers;
+    }
 }

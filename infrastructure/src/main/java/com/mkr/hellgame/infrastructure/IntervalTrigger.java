@@ -2,15 +2,19 @@ package com.mkr.hellgame.infrastructure;
 
 public class IntervalTrigger implements Trigger {
     private Job job;
-    private final long interval;
-
-    public IntervalTrigger(long interval) {
-        this.interval = interval;
-    }
+    private long interval;
 
     @Override
     public long nextScheduledExecuteIn() {
         return interval;
+    }
+
+    public long getInterval() {
+        return interval;
+    }
+
+    public void setInterval(long interval) {
+        this.interval = interval;
     }
 
     @Override
@@ -18,7 +22,6 @@ public class IntervalTrigger implements Trigger {
         return job;
     }
 
-    @Override
     public void setJob(Job job) {
         this.job = job;
     }
