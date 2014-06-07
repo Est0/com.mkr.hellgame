@@ -11,7 +11,7 @@
     <modules>
         <module>host</module>
         <module>hell</module>
-        <module>server.core</module>
+        <module>infrastructure</module>
         <module>hell.impl</module>
     </modules>
 
