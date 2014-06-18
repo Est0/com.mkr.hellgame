@@ -5,7 +5,7 @@ public class IntervalTrigger implements Trigger {
     private long interval;
 
     @Override
-    public long nextScheduledExecuteIn() {
+    public long calcNextScheduledExecuteIn() {
         return interval;
     }
 

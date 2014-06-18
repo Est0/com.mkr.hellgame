@@ -1,7 +1,7 @@
 package com.mkr.hellgame.infrastructure;
 
 public interface Trigger {
-    long nextScheduledExecuteIn();
+    long calcNextScheduledExecuteIn();
 
     Job getJob();
 }
