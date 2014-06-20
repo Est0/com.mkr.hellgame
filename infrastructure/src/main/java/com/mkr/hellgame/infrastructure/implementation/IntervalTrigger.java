@@ -1,4 +1,7 @@
-package com.mkr.hellgame.infrastructure;
+package com.mkr.hellgame.infrastructure.implementation;
+
+import com.mkr.hellgame.infrastructure.abstraction.Job;
+import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 
 public class IntervalTrigger implements Trigger {
     private Job job;

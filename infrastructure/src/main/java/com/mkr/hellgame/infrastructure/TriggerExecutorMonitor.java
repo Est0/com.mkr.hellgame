@@ -1,50 +1,42 @@
 package com.mkr.hellgame.infrastructure;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicLong;
 
 class TriggerExecutorMonitor {
-    //private Semaphore syncObj = new Semaphore(0);
-    private Object signalObj = new Object();
-    private Lock lock = new ReentrantLock();
-    private volatile long timer;
+    private Semaphore awake = new Semaphore(0);
+    private Semaphore ready = new Semaphore(1);
+    private AtomicLong timer;
 
     public TriggerExecutorMonitor(long timer) {
-        this.timer = timer;
+        this.timer = new AtomicLong(timer);
     }
 
-    public void waitSignal() throws InterruptedException {
-        //syncObj.acquire();
-        signalObj.wait();
+    public void waitAwakeSignal() throws InterruptedException{
+        awake.acquire();
     }
 
-    public void sendSignal() {
-        //syncObj.release();
-        signalObj.notify();
+    public void sendAwakeSignal() {
+        awake.release();
+    }
+
+    public boolean isReady() {
+        return ready.tryAcquire();
+    }
+
+    public void sendReadySignal() {
+        ready.release();
     }
 
     public long getTimer() {
-        return timer;
+        return timer.get();
     }
 
     public void setTimer(long value) {
-        lock.lock();
-        try {
-            timer = value;
-        }
-        finally {
-            lock.unlock();
-        }
+        timer.set(value);
     }
 
     public void decrementTimer(long value) {
-        if (timer > 0 && lock.tryLock()) {
-            try {
-                timer -= value;
-            }
-            finally {
-                lock.unlock();
-            }
-        }
+        timer.getAndAdd(-value);
     }
 }

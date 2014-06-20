@@ -3,7 +3,7 @@ package com.mkr.hellgame.hell;
 import com.mkr.hellgame.hell.dao.HellApiDao;
 import com.mkr.hellgame.hell.dao.OrderDao;
 import com.mkr.hellgame.hell.domain.Order;
-import com.mkr.hellgame.infrastructure.Job;
+import com.mkr.hellgame.infrastructure.abstraction.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

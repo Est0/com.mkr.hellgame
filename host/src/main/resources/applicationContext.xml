@@ -6,15 +6,30 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.mkr.hellgame.infrastructure"/>
     <context:component-scan base-package="com.mkr.hellgame.hell"/>
 
-    <bean class="com.mkr.hellgame.infrastructure.SpringExecutorConfigurationFactory" autowire="byType">
+    <bean class="com.mkr.hellgame.infrastructure.implementation.OneActiveJobRunStrategy">
+    </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.implementation.SpringExecutorConfigurationFactory" autowire="byType">
         <property name="executorGranularity" value="1000" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.IntervalTrigger" autowire="byType">
+    <bean class="com.mkr.hellgame.infrastructure.Executor" autowire="constructor">
+    </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.implementation.OneTimeTrigger">
+        <property name="job" ref="hellJob" />
+    </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.implementation.IntervalTrigger">
         <property name="interval" value="5000" />
+        <property name="job" ref="hellJob" />
+    </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.implementation.IntervalTrigger">
+        <property name="interval" value="10000" />
+        <property name="job" ref="hellJob" />
     </bean>
 
 </beans>
