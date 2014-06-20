@@ -7,13 +7,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicLong;
 
 class RootTimerService implements Runnable {
-    private Map<Trigger, AtomicLong> nextScheduledExecutionIns = new HashMap<>();
-    private Map<Trigger, Semaphore> triggerAwakeObjects = new HashMap<>();
-    private Map<Trigger, Semaphore> triggerReadyObjects = new HashMap<>();
+    private Map<Trigger, TriggerExecutorMonitor> triggerExecutorMonitors = new HashMap<>();
     private ExecutorService executorService;
     private JobRunStrategy jobRunStrategy;
     private long granularity;
@@ -29,21 +25,16 @@ class RootTimerService implements Runnable {
     @Override
     public void run() {
         for (Trigger trigger: triggers) {
-            nextScheduledExecutionIns.put(trigger, new AtomicLong(trigger.calcNextScheduledExecuteIn()));
-            Semaphore awake = new Semaphore(0);
-            triggerAwakeObjects.put(trigger, awake);
-            Semaphore ready = new Semaphore(1);
-            triggerReadyObjects.put(trigger, ready);
-            executorService.submit(new TriggerExecutor(executorService, jobRunStrategy, trigger, ready, awake, nextScheduledExecutionIns.get(trigger)));
+            TriggerExecutorMonitor triggerExecutorMonitor = new TriggerExecutorMonitor(trigger.calcNextScheduledExecuteIn());
+            triggerExecutorMonitors.put(trigger, triggerExecutorMonitor);
+            executorService.submit(new TriggerExecutor(executorService, jobRunStrategy, trigger, triggerExecutorMonitor));
         }
 
         while (!Thread.currentThread().isInterrupted()) {
-            for (Map.Entry<Trigger, AtomicLong> nextScheduledExecutionInEntry : nextScheduledExecutionIns.entrySet()) {
-                Trigger trigger = nextScheduledExecutionInEntry.getKey();
-                AtomicLong nextScheduledExecutionIn = nextScheduledExecutionInEntry.getValue();
-                if (nextScheduledExecutionIn.get() <= 0 &&
-                        triggerReadyObjects.get(trigger).tryAcquire()) {
-                    triggerAwakeObjects.get(trigger).release();
+            for (TriggerExecutorMonitor triggerExecutorMonitor : triggerExecutorMonitors.values()) {
+                if (triggerExecutorMonitor.getTimer() <= 0 &&
+                        triggerExecutorMonitor.isReady()) {
+                    triggerExecutorMonitor.sendAwakeSignal();
                 }
             }
 
@@ -55,8 +46,8 @@ class RootTimerService implements Runnable {
                 break;
             }
 
-            for (Map.Entry<Trigger, AtomicLong> nextScheduledExecutionIn: nextScheduledExecutionIns.entrySet()) {
-                nextScheduledExecutionIn.getValue().getAndAdd(-granularity);
+            for (TriggerExecutorMonitor triggerExecutorMonitor: triggerExecutorMonitors.values()) {
+                triggerExecutorMonitor.decrementTimer(granularity);
             }
         }
         System.out.println("Interrupted root timer");
