@@ -4,8 +4,11 @@ import com.mkr.hellgame.hell.dao.HellApiDao;
 import com.mkr.hellgame.hell.dao.OrderDao;
 import com.mkr.hellgame.hell.domain.Order;
 import com.mkr.hellgame.infrastructure.abstraction.Job;
+import com.mkr.hellgame.infrastructure.annotation.Loggable;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,9 +22,12 @@ public class HellJob implements Job {
     @Autowired
     private List<HellApiDao> hellApiDaos;
 
+    @Loggable
+    private Logger logger;
+
     @Override
     public void run() {
-        System.out.println("Hell yea!");
+        logger.debug("Hell yea!");
         List<Order> newOrders = orderDao.getNewOrders();
         List<Order> finishedOrders = orderDao.getFinishedOrders();
 

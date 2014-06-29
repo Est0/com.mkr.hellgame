@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.mkr.hellgame</groupId>
-            <artifactId>server.core</artifactId>
+            <artifactId>infrastructure</artifactId>
             <version>${version}</version>
         </dependency>
 

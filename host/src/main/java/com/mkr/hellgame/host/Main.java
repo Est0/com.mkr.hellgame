@@ -1,6 +1,9 @@
 package com.mkr.hellgame.host;
 
-import com.mkr.hellgame.infrastructure.*;
+import com.mkr.hellgame.infrastructure.Executor;
+import com.mkr.hellgame.infrastructure.abstraction.ExecutorConfigurationFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -8,26 +11,25 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Host started");
+        Logger logger = LoggerFactory.getLogger(Main.class);
+        logger.info("Host started");
 
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        try
-        {
-            Executor executor = context.getBean(Executor.class);
+        try {
+            ExecutorConfigurationFactory executorConfigurationFactory = context.getBean(ExecutorConfigurationFactory.class);
+            Executor executor = new Executor(executorConfigurationFactory.getConfiguration());
             executor.start();
             System.in.read();
-            System.out.println("Stopping executor");
+            logger.info("Stopping executor...");
             boolean success = executor.stop(2, TimeUnit.SECONDS);
             if (success) {
-                System.out.println("Executor stopped successfully");
+                logger.info("Executor stopped successfully");
+            } else {
+                logger.info("Executor was not stopped in time");
             }
-            else {
-                System.out.println("Executor was not stopped in time");
-            }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
 
-        System.out.println("Host stopped");
+        logger.info("Host stopped");
     }
 }

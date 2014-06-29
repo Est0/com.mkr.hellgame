@@ -1,4 +1,4 @@
-package com.mkr.hellgame.infrastructure.implementation;
+package com.mkr.hellgame.infrastructure.impl;
 
 import com.mkr.hellgame.infrastructure.abstraction.Job;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;

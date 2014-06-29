@@ -1,38 +1,44 @@
-package com.mkr.hellgame.infrastructure.implementation;
+package com.mkr.hellgame.infrastructure.impl;
 
 import com.mkr.hellgame.infrastructure.abstraction.Job;
 import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.*;
 
 public class OneActiveJobRunStrategy implements JobRunStrategy {
+    private static Logger logger = LoggerFactory.getLogger(OneActiveJobRunStrategy.class);
     private Map<Job, Future<Boolean>> jobStatuses = new ConcurrentHashMap<>();
     private ConcurrentMap<Job, Object> jobSyncObjects = new ConcurrentHashMap<>();
 
     @Override
     public void run(ExecutorService executorService, final Job job) {
+        logger.debug("OneActiveJobRunStrategy called for job {}", job);
         jobSyncObjects.putIfAbsent(job, new Object());
-        if (!jobStatuses.containsKey(job) ||
-                jobStatuses.get(job).isDone()) {
+        if (!jobStatuses.containsKey(job) || jobStatuses.get(job).isDone()) {
             synchronized (jobSyncObjects.get(job)) {
-                if (!jobStatuses.containsKey(job) ||
-                        jobStatuses.get(job).isDone()) {
+                if (!jobStatuses.containsKey(job) || jobStatuses.get(job).isDone()) {
+                    logger.info("Starting job {}", job);
                     Future<Boolean> future = executorService.submit(new Callable<Boolean>() {
                         @Override
                         public Boolean call() {
                             try {
                                 job.run();
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 return false;
                             }
                             return true;
                         }
                     });
                     jobStatuses.put(job, future);
+                } else {
+                    logger.info("Job {} is already running, skipping this time...", job);
                 }
             }
+        } else {
+            logger.info("Job {} is already running, skipping this time...", job);
         }
     }
 }

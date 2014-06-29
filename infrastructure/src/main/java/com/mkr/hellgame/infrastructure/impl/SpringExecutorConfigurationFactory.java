@@ -1,4 +1,4 @@
-package com.mkr.hellgame.infrastructure.implementation;
+package com.mkr.hellgame.infrastructure.impl;
 
 import com.mkr.hellgame.infrastructure.Configuration;
 import com.mkr.hellgame.infrastructure.abstraction.ExecutorConfigurationFactory;

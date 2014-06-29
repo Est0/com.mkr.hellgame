@@ -8,28 +8,31 @@
 
     <context:component-scan base-package="com.mkr.hellgame.hell"/>
 
-    <bean class="com.mkr.hellgame.infrastructure.implementation.OneActiveJobRunStrategy">
+    <bean class="com.mkr.hellgame.infrastructure.impl.OneActiveJobRunStrategy">
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.implementation.SpringExecutorConfigurationFactory" autowire="byType">
+    <bean class="com.mkr.hellgame.infrastructure.impl.SpringExecutorConfigurationFactory" autowire="byType">
         <property name="executorGranularity" value="1000" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.Executor" autowire="constructor">
-    </bean>
+    <!--<bean class="com.mkr.hellgame.infrastructure.impl.ClassPathXmlExecutorConfigurationFactory">
+        <constructor-arg name="configLocation" value="executorConfig.xml" />
+    </bean>-->
 
-    <bean class="com.mkr.hellgame.infrastructure.implementation.OneTimeTrigger">
+    <bean class="com.mkr.hellgame.infrastructure.impl.OneTimeTrigger">
         <property name="job" ref="hellJob" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.implementation.IntervalTrigger">
+    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTrigger">
         <property name="interval" value="5000" />
         <property name="job" ref="hellJob" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.implementation.IntervalTrigger">
+    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTrigger">
         <property name="interval" value="10000" />
         <property name="job" ref="hellJob" />
     </bean>
+
+    <bean class="com.mkr.hellgame.infrastructure.annotation.LoggableAnnotationBeanPostProcessor" />
 
 </beans>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executorConfig>
+    <granularity>1000</granularity>
+    <triggers>
+        <trigger class="com.mkr.hellgame.infrastructure.impl.OneTimeTrigger">
+            <job>mkr.hellgame.hell.HellJob</job>
+        </trigger>
+    </triggers>
+    <jobRunStrategy class="com.mkr.hellgame.infrastructure.impl.DefaultJobRunStrategy">
+    </jobRunStrategy>
+</executorConfig>

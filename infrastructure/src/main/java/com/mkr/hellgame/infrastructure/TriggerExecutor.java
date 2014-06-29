@@ -2,10 +2,13 @@ package com.mkr.hellgame.infrastructure;
 
 import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 
 class TriggerExecutor implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(TriggerExecutor.class);
     private ExecutorService executorService;
     private JobRunStrategy jobRunStrategy;
     private Trigger trigger;
@@ -23,14 +26,16 @@ class TriggerExecutor implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 triggerExecutorMonitor.waitAwakeSignal();
+                logger.debug("TriggerExecutor awaken for Trigger {}", trigger);
                 jobRunStrategy.run(executorService, trigger.getJob());
                 triggerExecutorMonitor.setTimer(trigger.calcNextScheduledExecuteIn());
+                logger.debug("TriggerExecutor falls asleep for Trigger {}", trigger);
                 triggerExecutorMonitor.sendReadySignal();
             }
             catch (InterruptedException e) {
                 break;
             }
         }
-        System.out.println("Interrupted Trigger Executor");
+        logger.info("Interrupted TriggerExecutor");
     }
 }

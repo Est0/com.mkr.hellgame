@@ -2,6 +2,8 @@ package com.mkr.hellgame.infrastructure;
 
 import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 class RootTimerService implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(RootTimerService.class);
     private Map<Trigger, TriggerExecutorMonitor> triggerExecutorMonitors = new HashMap<>();
     private ExecutorService executorService;
     private JobRunStrategy jobRunStrategy;
@@ -39,17 +42,17 @@ class RootTimerService implements Runnable {
             }
 
             try {
-                System.out.println("Tick-tack");
                 Thread.sleep(granularity);
             }
             catch (InterruptedException e) {
                 break;
             }
 
+            logger.debug("RootTimerService says: Tick-tack ({}ms)", granularity);
             for (TriggerExecutorMonitor triggerExecutorMonitor: triggerExecutorMonitors.values()) {
                 triggerExecutorMonitor.decrementTimer(granularity);
             }
         }
-        System.out.println("Interrupted root timer");
+        logger.info("Interrupted RootTimerService");
     }
 }
