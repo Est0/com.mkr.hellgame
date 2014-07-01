@@ -37,7 +37,7 @@ public class SpringExecutorConfigurationFactory implements ExecutorConfiguration
     }
 
     @Override
-    public Configuration getConfiguration() {
+     public Configuration getConfiguration() {
         Configuration result = new Configuration();
         result.setExecutorGranularity(executorGranularity);
         result.setTriggers(triggers.values());

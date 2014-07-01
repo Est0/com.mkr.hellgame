@@ -23,12 +23,12 @@
         <property name="job" ref="hellJob" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTrigger">
+    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTriggerTests">
         <property name="interval" value="5000" />
         <property name="job" ref="hellJob" />
     </bean>
 
-    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTrigger">
+    <bean class="com.mkr.hellgame.infrastructure.impl.IntervalTriggerTests">
         <property name="interval" value="10000" />
         <property name="job" ref="hellJob" />
     </bean>
