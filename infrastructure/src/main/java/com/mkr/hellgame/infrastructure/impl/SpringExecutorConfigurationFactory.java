@@ -6,9 +6,12 @@ import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SpringExecutorConfigurationFactory implements ExecutorConfigurationFactory {
     private long executorGranularity = 1000;
+    private ExecutorService executorService;
     private Map<String, Trigger> triggers;
     private JobRunStrategy jobRunStrategy;
 
@@ -18,6 +21,17 @@ public class SpringExecutorConfigurationFactory implements ExecutorConfiguration
 
     public void setExecutorGranularity(long executorGranularity) {
         this.executorGranularity = executorGranularity;
+    }
+
+    public ExecutorService getExecutorService() {
+        if (executorService == null) {
+            executorService = Executors.newCachedThreadPool();
+        }
+        return executorService;
+    }
+
+    public void setExecutorService(ExecutorService executorService) {
+        this.executorService = executorService;
     }
 
     public Map<String, Trigger> getTriggers() {
@@ -40,6 +54,7 @@ public class SpringExecutorConfigurationFactory implements ExecutorConfiguration
      public Configuration getConfiguration() {
         Configuration result = new Configuration();
         result.setExecutorGranularity(executorGranularity);
+        result.setExecutorService(getExecutorService());
         result.setTriggers(triggers.values());
         result.setJobRunStrategy(jobRunStrategy);
         return result;

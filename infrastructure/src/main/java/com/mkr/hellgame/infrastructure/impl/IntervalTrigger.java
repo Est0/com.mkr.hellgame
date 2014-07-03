@@ -1,10 +1,9 @@
 package com.mkr.hellgame.infrastructure.impl;
 
-import com.mkr.hellgame.infrastructure.abstraction.Job;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 
 public class IntervalTrigger implements Trigger {
-    private Job job;
+    private Runnable job;
     private long interval;
 
     @Override
@@ -21,11 +20,11 @@ public class IntervalTrigger implements Trigger {
     }
 
     @Override
-    public Job getJob() {
+    public Runnable getJob() {
         return job;
     }
 
-    public void setJob(Job job) {
+    public void setJob(Runnable job) {
         this.job = job;
     }
 }

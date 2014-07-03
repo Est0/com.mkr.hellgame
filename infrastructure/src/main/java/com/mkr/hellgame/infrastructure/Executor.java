@@ -18,7 +18,7 @@ public class Executor {
 
     public void start() {
         logger.info("Starting Executor...");
-        executorService = Executors.newCachedThreadPool();
+        executorService = configuration.getExecutorService();
         executorService.submit(new RootTimerService(executorService, configuration.getJobRunStrategy(), configuration.getExecutorGranularity(), configuration.getTriggers()));
     }
 

@@ -4,7 +4,7 @@ import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OneTimeTriggerTests {
+public class OneTimeTriggerTest {
     @Test
     public void triggerJobExecutionImmediatelyForTheFirstTime() {
         Trigger trigger = new OneTimeTrigger();

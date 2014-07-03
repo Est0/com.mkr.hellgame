@@ -4,9 +4,11 @@ import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 
 import java.util.Collection;
+import java.util.concurrent.ExecutorService;
 
 public class Configuration {
     private long executorGranularity;
+    private ExecutorService executorService;
     private Collection<Trigger> triggers;
     private JobRunStrategy jobRunStrategy;
 
@@ -16,6 +18,14 @@ public class Configuration {
 
     public void setExecutorGranularity(long executorGranularity) {
         this.executorGranularity = executorGranularity;
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
+    }
+
+    public void setExecutorService(ExecutorService executorService) {
+        this.executorService = executorService;
     }
 
     public Collection<Trigger> getTriggers() {

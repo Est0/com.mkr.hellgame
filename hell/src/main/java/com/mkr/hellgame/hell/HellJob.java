@@ -3,7 +3,6 @@ package com.mkr.hellgame.hell;
 import com.mkr.hellgame.hell.dao.HellApiDao;
 import com.mkr.hellgame.hell.dao.OrderDao;
 import com.mkr.hellgame.hell.domain.Order;
-import com.mkr.hellgame.infrastructure.abstraction.Job;
 import com.mkr.hellgame.infrastructure.annotation.Loggable;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class HellJob implements Job {
+public class HellJob implements Runnable {
     @Autowired
     private OrderDao orderDao;
 
@@ -27,7 +26,8 @@ public class HellJob implements Job {
     @Override
     public void run() {
         logger.debug("Hell yea!");
-        List<Order> newOrders = orderDao.getNewOrders();
+        throw new RuntimeException("asdf");
+        /*List<Order> newOrders = orderDao.getNewOrders();
         List<Order> finishedOrders = orderDao.getFinishedOrders();
 
         Date now = new Date();
@@ -59,6 +59,6 @@ public class HellJob implements Job {
                     break;
                 }
             }
-        }
+        }*/
     }
 }

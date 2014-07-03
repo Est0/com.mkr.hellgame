@@ -1,10 +1,9 @@
 package com.mkr.hellgame.infrastructure.impl;
 
-import com.mkr.hellgame.infrastructure.abstraction.Job;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
 
 public class OneTimeTrigger implements Trigger {
-    private Job job;
+    private Runnable job;
     private boolean executed = false;
 
     @Override
@@ -15,11 +14,11 @@ public class OneTimeTrigger implements Trigger {
     }
 
     @Override
-    public Job getJob() {
+    public Runnable getJob() {
         return job;
     }
 
-    public void setJob(Job job) {
+    public void setJob(Runnable job) {
         this.job = job;
     }
 }
