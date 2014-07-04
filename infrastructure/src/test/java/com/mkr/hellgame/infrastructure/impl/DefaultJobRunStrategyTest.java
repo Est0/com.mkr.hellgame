@@ -9,6 +9,7 @@ import org.mockito.stubbing.Answer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.*;
@@ -23,10 +24,10 @@ public class DefaultJobRunStrategyTest {
         sut = new DefaultJobRunStrategy();
     }
 
-    @Test(timeout = 100)
-    public void executeAllJobsSimultaneously() throws Exception{
+    @Test
+    public void run_IfAllIsOk_ThenExecuteAllJobsSimultaneously() throws Exception{
         // given
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        ExecutorService executorService = mock(ExecutorService.class);
         Runnable job = mock(Runnable.class);
 
         // when
@@ -35,14 +36,12 @@ public class DefaultJobRunStrategyTest {
         }
 
         // then
-        executorService.shutdownNow();
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-        verify(job, times(10)).run();
+        verify(executorService, times(10)).submit(any(Runnable.class));
     }
 
 
     @Test
-    public void doNothingIfExecutorServiceIsNull() throws Exception {
+    public void run_IfExecutorServiceIsNull_ThenDoNothing() throws Exception {
         // given
         Runnable job = mock(Runnable.class);
 
@@ -54,7 +53,7 @@ public class DefaultJobRunStrategyTest {
     }
 
     @Test
-    public void doNothingIfJobIsNull() throws Exception {
+    public void run_IfJobIsNull_ThenDoNothing() throws Exception {
         // given
         ExecutorService executorService = mock(ExecutorService.class);
 

@@ -1,6 +1,7 @@
 package com.mkr.hellgame.infrastructure.impl;
 
 import com.mkr.hellgame.infrastructure.Configuration;
+import com.mkr.hellgame.infrastructure.ExecutorServiceType;
 import com.mkr.hellgame.infrastructure.abstraction.ExecutorConfigurationFactory;
 import com.mkr.hellgame.infrastructure.abstraction.JobRunStrategy;
 import com.mkr.hellgame.infrastructure.abstraction.Trigger;
@@ -11,7 +12,8 @@ import java.util.concurrent.Executors;
 
 public class SpringExecutorConfigurationFactory implements ExecutorConfigurationFactory {
     private long executorGranularity = 1000;
-    private ExecutorService executorService;
+    private ExecutorServiceType executorServiceType;
+    private int fixedThreadPoolAmount = 1;
     private Map<String, Trigger> triggers;
     private JobRunStrategy jobRunStrategy;
 
@@ -23,15 +25,20 @@ public class SpringExecutorConfigurationFactory implements ExecutorConfiguration
         this.executorGranularity = executorGranularity;
     }
 
-    public ExecutorService getExecutorService() {
-        if (executorService == null) {
-            executorService = Executors.newCachedThreadPool();
-        }
-        return executorService;
+    public ExecutorServiceType getExecutorServiceType() {
+        return executorServiceType;
     }
 
-    public void setExecutorService(ExecutorService executorService) {
-        this.executorService = executorService;
+    public void setExecutorServiceType(ExecutorServiceType executorServiceType) {
+        this.executorServiceType = executorServiceType;
+    }
+
+    public int getFixedThreadPoolAmount() {
+        return fixedThreadPoolAmount;
+    }
+
+    public void setFixedThreadPoolAmount(int fixedThreadPoolAmount) {
+        this.fixedThreadPoolAmount = fixedThreadPoolAmount;
     }
 
     public Map<String, Trigger> getTriggers() {
@@ -51,10 +58,24 @@ public class SpringExecutorConfigurationFactory implements ExecutorConfiguration
     }
 
     @Override
-     public Configuration getConfiguration() {
+    public Configuration getConfiguration() {
         Configuration result = new Configuration();
         result.setExecutorGranularity(executorGranularity);
-        result.setExecutorService(getExecutorService());
+        ExecutorService executorService;
+        switch (executorServiceType) {
+            case FIXED_THREAD_POOL:
+                executorService = Executors.newFixedThreadPool(fixedThreadPoolAmount);
+                break;
+
+            case CACHED_THREAD_POOL:
+                executorService = Executors.newCachedThreadPool();
+                break;
+            case SINGLE_THREAD_POOL:
+            default:
+                executorService = Executors.newSingleThreadExecutor();
+                break;
+        }
+        result.setExecutorService(executorService);
         result.setTriggers(triggers.values());
         result.setJobRunStrategy(jobRunStrategy);
         return result;

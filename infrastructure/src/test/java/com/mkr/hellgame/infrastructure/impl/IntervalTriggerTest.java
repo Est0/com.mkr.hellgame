@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class IntervalTriggerTest {
     @Test
-    public void triggerJobExecutionWithEqualIntervalsAllTheTime() {
+    public void calcNextScheduledExecuteIn_IfAllIsOk_ThenReturnSameValueAllTheTime() {
         final long INTERVAL = 12345;
         IntervalTrigger trigger = new IntervalTrigger();
         trigger.setInterval(INTERVAL);

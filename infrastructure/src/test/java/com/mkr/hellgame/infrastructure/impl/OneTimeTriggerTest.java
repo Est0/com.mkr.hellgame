@@ -6,14 +6,14 @@ import org.junit.Test;
 
 public class OneTimeTriggerTest {
     @Test
-    public void triggerJobExecutionImmediatelyForTheFirstTime() {
+    public void calcNextScheduledExecuteIn_IfFirstInvocation_ThenReturnZero() {
         Trigger trigger = new OneTimeTrigger();
         long value = trigger.calcNextScheduledExecuteIn();
         Assert.assertEquals(value, 0);
     }
 
     @Test
-    public void triggerJobExecutionAfterLongMaxValueForSecondAndSubsequesntTimes() {
+    public void calcNextScheduledExecuteIn_IfSecondAndSubsequentInvocations_ThenReturnLongMaxValue() {
         Trigger trigger = new OneTimeTrigger();
         trigger.calcNextScheduledExecuteIn();
         long value2 = trigger.calcNextScheduledExecuteIn();

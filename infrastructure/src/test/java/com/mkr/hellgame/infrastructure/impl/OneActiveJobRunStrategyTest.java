@@ -8,6 +8,7 @@ import org.mockito.stubbing.Answer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.*;
@@ -20,19 +21,14 @@ public class OneActiveJobRunStrategyTest {
         sut = new OneActiveJobRunStrategy();
     }
 
-    @Test(timeout = 100)
-    public void executeOnlyOneJobOfTheSameTypeAtATime() throws Exception{
+    @Test
+    public void run_ExecuteOnlyOneJobOfTheSameTypeAtATime() throws Exception{
         // given
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future future = mock(Future.class);
+        when(future.get()).thenReturn(false);
+        ExecutorService executorService = mock(ExecutorService.class);
+        when(executorService.submit(any(Runnable.class))).thenReturn(future);
         Runnable job = mock(Runnable.class);
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                Thread.sleep(Long.MAX_VALUE);
-                return null;
-            }
-        }).when(job).run();
-
 
         // when
         for (int i=0;i<10;i++) {
@@ -40,14 +36,12 @@ public class OneActiveJobRunStrategyTest {
         }
 
         // then
-        executorService.shutdownNow();
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
-        verify(job, times(1)).run();
+        verify(executorService).submit(any(Runnable.class));
     }
 
 
     @Test
-    public void doNothingIfExecutorServiceIsNull() throws Exception {
+    public void run_DoNothingIfExecutorServiceIsNull() throws Exception {
         // given
         Runnable job = mock(Runnable.class);
 
@@ -59,7 +53,7 @@ public class OneActiveJobRunStrategyTest {
     }
 
     @Test
-    public void doNothingIfJobIsNull() throws Exception {
+    public void run_DoNothingIfJobIsNull() throws Exception {
         // given
         ExecutorService executorService = mock(ExecutorService.class);
 
