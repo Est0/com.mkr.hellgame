@@ -2,26 +2,36 @@ package com.mkr.hellgame.hell;
 
 import com.mkr.hellgame.hell.dao.HellApiDao;
 import com.mkr.hellgame.hell.dao.OrderDao;
-import com.mkr.hellgame.hell.domain.Order;
-import com.mkr.hellgame.infrastructure.annotation.Loggable;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
 public class HellJob implements Runnable {
     @Autowired
     private OrderDao orderDao;
-
     @Autowired
     private List<HellApiDao> hellApiDaos;
+    private Logger logger = LoggerFactory.getLogger(HellJob.class);
 
-    @Loggable
-    private Logger logger;
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
+    public void setOrderDao(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
+
+    public List<HellApiDao> getHellApiDaos() {
+        return hellApiDaos;
+    }
+
+    public void setHellApiDaos(List<HellApiDao> hellApiDaos) {
+        this.hellApiDaos = hellApiDaos;
+    }
 
     @Override
     public void run() {

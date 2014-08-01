@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Class-Path: spring-aop-4.0.5.RELEASE.jar spring-test-4.0.5.RELEASE.jar
+  spring-expression-4.0.5.RELEASE.jar slf4j-log4j12-1.7.7.jar spring-e
+ xpression-4.0.6.RELEASE.jar spring-beans-4.0.6.RELEASE.jar spring-con
+ text-4.0.5.RELEASE.jar spring-aop-4.0.6.RELEASE.jar jcl-over-slf4j-1.
+ 7.7.jar spring-test-4.0.6.RELEASE.jar spring-context-4.0.6.RELEASE.ja
+ r spring-beans-4.0.5.RELEASE.jar slf4j-api-1.7.7.jar log4j-1.2.17.jar
+  spring-core-4.0.5.RELEASE.jar spring-core-4.0.6.RELEASE.jar aopallia
+ nce-1.0.jar
+Main-Class: com.mkr.hellgame.host.Main
+

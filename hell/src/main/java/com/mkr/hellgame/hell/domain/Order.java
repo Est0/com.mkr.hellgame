@@ -1,13 +1,20 @@
 package com.mkr.hellgame.hell.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Order {
+    @Id
+    @GeneratedValue
     private int id;
-    private int inGameUserId;
-    private int durationMilliSeconds;
+    @ManyToOne
+    @JoinColumn(name = "inGameUserId")
+    private InGameUser inGameUser;
+    @Column(name = "duration")
+    private long durationMilliSeconds;
     private Date startDate;
-    private Date endDate;
+    private String action;
 
     public int getId() {
         return id;
@@ -17,19 +24,19 @@ public class Order {
         this.id = id;
     }
 
-    public int getInGameUserId() {
-        return inGameUserId;
+    public InGameUser getInGameUser() {
+        return inGameUser;
     }
 
-    public void setInGameUserId(int inGameUserId) {
-        this.inGameUserId = inGameUserId;
+    public void setInGameUser(InGameUser inGameUser) {
+        this.inGameUser = inGameUser;
     }
 
-    public int getDurationMilliSeconds() {
+    public long getDurationMilliSeconds() {
         return durationMilliSeconds;
     }
 
-    public void setDurationMilliSeconds(int durationMilliSeconds) {
+    public void setDurationMilliSeconds(long durationMilliSeconds) {
         this.durationMilliSeconds = durationMilliSeconds;
     }
 
@@ -41,11 +48,11 @@ public class Order {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getAction() {
+        return action;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setAction(String action) {
+        this.action = action;
     }
 }

@@ -8,4 +8,6 @@ public interface OrderDao {
     List<Order> getNewOrders();
 
     List<Order> getFinishedOrders();
+
+    void create(Order order);
 }

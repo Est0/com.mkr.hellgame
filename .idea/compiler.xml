@@ -30,6 +30,13 @@
         <module name="server.core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.mkr.hellgame" target="1.7" />
+      <module name="hell" target="1.7" />
+      <module name="hell.impl" target="1.7" />
+      <module name="host" target="1.7" />
+      <module name="infrastructure" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 

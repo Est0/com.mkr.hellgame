@@ -118,12 +118,16 @@ public class ExecutorTest {
         // then
     }
 
-    @Test(expected = InterruptedException.class)
-    public void stop_IfWasInterrupted_ThenThrowInterruptedException() throws Exception {
+    @Test
+    public void stop_IfWasInterrupted_ThenReturnFalse() throws Exception {
         // given
+        when(executorService.awaitTermination(any(Integer.class), any(TimeUnit.class))).thenThrow(new InterruptedException());
+        sut.start();
 
         // when
+        boolean result = sut.stop(0, TimeUnit.SECONDS);
 
         // then
+        Assert.assertEquals(false, result);
     }
 }
