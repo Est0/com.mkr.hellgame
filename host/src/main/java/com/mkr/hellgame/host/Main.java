@@ -10,8 +10,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(Main.class);
         logger.info("Host started");
 
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -28,6 +29,7 @@ public class Main {
                 logger.info("Executor was not stopped in time");
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         logger.info("Host stopped");

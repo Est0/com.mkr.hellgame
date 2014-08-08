@@ -1,17 +1,20 @@
-package com.mkr.hellgame.hell.domain;
+package com.mkr.hellgame.hell.entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-public class User {
+public class SystemUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String login;
+
     private String password;
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "systemUser")
     private Collection<InGameUser> inGameUsers = new ArrayList<>();
 
     public int getId() {

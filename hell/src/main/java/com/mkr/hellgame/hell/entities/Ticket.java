@@ -1,19 +1,23 @@
-package com.mkr.hellgame.hell.domain;
+package com.mkr.hellgame.hell.entities;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Order {
+public class Ticket {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
     @JoinColumn(name = "inGameUserId")
     private InGameUser inGameUser;
+
     @Column(name = "duration")
     private long durationMilliSeconds;
+
     private Date startDate;
+
     private String action;
 
     public int getId() {

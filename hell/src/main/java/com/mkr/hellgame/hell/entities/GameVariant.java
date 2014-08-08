@@ -1,14 +1,16 @@
-package com.mkr.hellgame.hell.domain;
+package com.mkr.hellgame.hell.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class GameVariant {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
+
     private String title;
 
     public int getId() {

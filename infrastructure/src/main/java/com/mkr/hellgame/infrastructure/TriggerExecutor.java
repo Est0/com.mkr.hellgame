@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
 
 class TriggerExecutor implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(TriggerExecutor.class);
+    private static final Logger logger = LoggerFactory.getLogger(TriggerExecutor.class);
     private ExecutorService executorService;
     private JobRunStrategy jobRunStrategy;
     private Trigger trigger;

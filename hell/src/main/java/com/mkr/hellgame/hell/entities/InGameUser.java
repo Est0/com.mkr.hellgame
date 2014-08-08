@@ -1,17 +1,21 @@
-package com.mkr.hellgame.hell.domain;
+package com.mkr.hellgame.hell.entities;
 
 import javax.persistence.*;
 
 @Entity
 public class InGameUser {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "systemUserId")
+    private SystemUser systemUser;
+
     private String login;
+
     @ManyToOne
+    @JoinColumn(name = "gameVariantId")
     private GameVariant gameVariant;
 
     public int getId() {
@@ -22,12 +26,12 @@ public class InGameUser {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public SystemUser getSystemUser() {
+        return systemUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSystemUser(SystemUser systemUser) {
+        this.systemUser = systemUser;
     }
 
     public String getLogin() {

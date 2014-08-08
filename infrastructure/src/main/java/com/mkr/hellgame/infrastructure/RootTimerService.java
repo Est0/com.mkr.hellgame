@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 class RootTimerService implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(RootTimerService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RootTimerService.class);
     private Map<Trigger, TriggerExecutorMonitor> triggerExecutorMonitors = new HashMap<>();
     private ExecutorService executorService;
     private JobRunStrategy jobRunStrategy;

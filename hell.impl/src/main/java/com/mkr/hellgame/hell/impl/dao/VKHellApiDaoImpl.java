@@ -1,14 +1,19 @@
 package com.mkr.hellgame.hell.impl.dao;
 
 import com.mkr.hellgame.hell.dao.HellApiDao;
-import com.mkr.hellgame.hell.domain.Order;
+import com.mkr.hellgame.hell.entities.Ticket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 @Qualifier("VK")
 public class VKHellApiDaoImpl implements HellApiDao {
+    private static final Logger logger = LoggerFactory.getLogger(VKHellApiDaoImpl.class);
+
     @Override
-    public void SendRequest(Order order) {
+    public void sendRequest(Ticket ticket) {
+        logger.info("VKHellApiDaoImpl.sendRequest invoked with {}", ticket);
     }
 }

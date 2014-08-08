@@ -1,7 +1,7 @@
 package com.mkr.hellgame.hell.dao;
 
-import com.mkr.hellgame.hell.domain.Order;
+import com.mkr.hellgame.hell.entities.Ticket;
 
 public interface HellApiDao {
-    void SendRequest(Order order);
+    void sendRequest(Ticket ticket);
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class Executor {
     private Configuration configuration;
     private ExecutorService executorService;
-    private static Logger logger = LoggerFactory.getLogger(Executor.class);
+    private static final Logger logger = LoggerFactory.getLogger(Executor.class);
 
     public Executor(Configuration configuration) {
         this.configuration = configuration;
