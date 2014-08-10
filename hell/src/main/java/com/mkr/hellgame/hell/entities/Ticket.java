@@ -14,7 +14,7 @@ public class Ticket {
     private InGameUser inGameUser;
 
     @Column(name = "duration")
-    private long durationMilliSeconds;
+    private long duration;
 
     private Date startDate;
 
@@ -36,12 +36,12 @@ public class Ticket {
         this.inGameUser = inGameUser;
     }
 
-    public long getDurationMilliSeconds() {
-        return durationMilliSeconds;
+    public long getDuration() {
+        return duration;
     }
 
-    public void setDurationMilliSeconds(long durationMilliSeconds) {
-        this.durationMilliSeconds = durationMilliSeconds;
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     public Date getStartDate() {

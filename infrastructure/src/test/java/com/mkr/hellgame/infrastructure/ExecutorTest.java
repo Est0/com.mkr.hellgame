@@ -84,15 +84,29 @@ public class ExecutorTest {
     @Test
     public void stop_IfInvokedCorrectly_ThenStopInTime() throws Exception {
         // given
-        when(executorService.awaitTermination(leq(1L), eq(TimeUnit.MILLISECONDS))).thenReturn(true);
-        when(executorService.awaitTermination(gt(1L), eq(TimeUnit.MILLISECONDS))).thenReturn(false);
+        when(executorService.awaitTermination(leq(1L), eq(TimeUnit.SECONDS))).thenReturn(true);
+        when(executorService.awaitTermination(gt(1L), eq(TimeUnit.SECONDS))).thenReturn(false);
         sut.start();
 
         // when
-        boolean result = sut.stop(1, TimeUnit.MILLISECONDS);
+        boolean result = sut.stop(1, TimeUnit.SECONDS);
 
         // then
         Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void stop_IfGivenNotEnoughTimeToStopThreads_ThenReturnFalse() throws Exception {
+        // given
+        when(executorService.awaitTermination(lt(2L), eq(TimeUnit.SECONDS))).thenReturn(false);
+        when(executorService.awaitTermination(geq(2L), eq(TimeUnit.SECONDS))).thenReturn(true);
+        sut.start();
+
+        // when
+        boolean result = sut.stop(1, TimeUnit.SECONDS);
+
+        // then
+        Assert.assertEquals(false, result);
     }
 
     @Test(expected = ExecutorNotStartedYetException.class)

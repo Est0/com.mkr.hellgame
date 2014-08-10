@@ -20,10 +20,10 @@ public class OneActiveJobRunStrategyTest {
     @Test
     public void run_ExecuteOnlyOneJobOfTheSameTypeAtATime() throws Exception{
         // given
-        Future future = mock(Future.class);
+        Future<?> future = mock(Future.class);
         when(future.get()).thenReturn(false);
         ExecutorService executorService = mock(ExecutorService.class);
-        when(executorService.submit(any(Runnable.class))).thenReturn(future);
+        org.mockito.Mockito.<Future<?>>when(executorService.submit(any(Runnable.class))).thenReturn(future);
         Runnable job = mock(Runnable.class);
 
         // when

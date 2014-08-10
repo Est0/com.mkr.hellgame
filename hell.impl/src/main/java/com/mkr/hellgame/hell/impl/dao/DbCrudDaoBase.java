@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DbCrudDaoBase<T> {
     private Class<T> entityClass;
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
     public DbCrudDaoBase(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -24,17 +24,8 @@ public class DbCrudDaoBase<T> {
     }
 
     @Transactional(readOnly = true)
-
     public T getById(int id) {
-/*
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        @SuppressWarnings("unchecked")
-        T result = (T)session.get(entityClass, id);
-        transaction.commit();
-        return result;
-*/
-        return (T)sessionFactory.getCurrentSession().get(entityClass, id);
+        return (T)sessionFactory.getCurrentSession().load(entityClass, id);
     }
 
     public void create(T value) {

@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Transactional
 public class HellJob implements Runnable {
     @Autowired
     private TicketDao ticketDao;
@@ -38,6 +37,7 @@ public class HellJob implements Runnable {
         this.hellApiDaoResolver = hellApiDaoResolver;
     }
 
+    @Transactional
     @Override
     public void run() {
         logger.info("HellJob Started");
@@ -63,7 +63,7 @@ public class HellJob implements Runnable {
             for (Ticket otherTicket : newTickets) {
                 if (ticket.getInGameUser().getId() == otherTicket.getInGameUser().getId() &&
                         ticket.getId() < otherTicket.getId()) {
-                    logger.debug("Deleting ticket {} as there is at least one newer ticket");
+                    logger.debug("Deleting ticket {} as there is at least one newer ticket", ticket);
                     newerOverlappingTicketExists = true;
                     ticketDao.delete(ticket);
                     break;
@@ -88,7 +88,7 @@ public class HellJob implements Runnable {
                 logger.debug("There is no new ticket which overlaps with finished ticket {}, therefore it will be restarted", finishedTicket);
                 Ticket newTicket = new Ticket();
                 newTicket.setAction(finishedTicket.getAction());
-                newTicket.setDurationMilliSeconds(finishedTicket.getDurationMilliSeconds());
+                newTicket.setDuration(finishedTicket.getDuration());
                 newTicket.setInGameUser(finishedTicket.getInGameUser());
                 ticketDao.create(newTicket);
                 ticketsToProcess.add(newTicket);

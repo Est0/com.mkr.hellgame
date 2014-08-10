@@ -14,6 +14,6 @@ public class VKHellApiDaoImpl implements HellApiDao {
 
     @Override
     public void sendRequest(Ticket ticket) {
-        logger.info("VKHellApiDaoImpl.sendRequest invoked with {}", ticket);
+        logger.info("VKHellApiDaoImpl.sendRequest invoked with {} and performed action: \"{}\"", ticket, ticket.getAction());
     }
 }

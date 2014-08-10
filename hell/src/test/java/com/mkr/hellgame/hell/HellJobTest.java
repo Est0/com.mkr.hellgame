@@ -77,7 +77,7 @@ public class HellJobTest {
 
         Ticket capturedTicket = apiTicketCaptor.getValue();
         Assert.assertThat(capturedTicket.getAction(), is(equalTo(DEFAULT_ACTION_TITLE)));
-        Assert.assertThat(capturedTicket.getDurationMilliSeconds(), is(equalTo(DEFAULT_ACTION_DURATION)));
+        Assert.assertThat(capturedTicket.getDuration(), is(equalTo(DEFAULT_ACTION_DURATION)));
         Assert.assertThat(capturedTicket.getStartDate(), is(greaterThanOrEqualTo(now.toDate())));
         Assert.assertThat(capturedTicket.getInGameUser(), is(equalTo(ticket.getInGameUser())));
 
@@ -189,7 +189,7 @@ public class HellJobTest {
     private Ticket createDummyTicket() {
         Ticket ticket = new Ticket();
         ticket.setAction(DEFAULT_ACTION_TITLE);
-        ticket.setDurationMilliSeconds(DEFAULT_ACTION_DURATION);
+        ticket.setDuration(DEFAULT_ACTION_DURATION);
 
         GameVariant gameVariant = new GameVariant();
         InGameUser inGameUser = new InGameUser();
